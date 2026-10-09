@@ -1,0 +1,68 @@
+import numpy as np
+import matplotlib.pyplot as plt
+k=8.99e9
+q=1
+N=20
+x = np.linspace(2.0,10.0,N)+(1e-6) # so as not to have point at zero
+y = np.linspace(3.0,11.0,N)+(1e-6)
+X,Y = np.meshgrid(x,y)
+
+x0=6
+y0=7
+
+x1=4
+y1=7
+
+x2=6
+y2=9
+
+x3=8
+y3=7
+
+x4=6
+y4=5
+
+# now find field
+thE0 = np.arctan2(Y-y0,X-x0)
+magE0 = k*q/((X-x0)**2.+(Y-y0)**2.)
+
+thE1 = np.arctan2(Y-y1,X-x1)
+magE1 = k*q/((X-x1)**2.+(Y-y1)**2.)
+
+thE2 = np.arctan2(Y-y2,X-x2)
+magE2 = k*q/((X-x2)**2.+(Y-y2)**2.)
+
+thE3 = np.arctan2(Y-y3,X-x3)
+magE3 = k*q/((X-x3)**2.+(Y-y3)**2.)
+
+thE4 = np.arctan2(Y-y4,X-x4)
+magE4 = k*q/((X-x4)**2.+(Y-y4)**2.)
+
+mask = magE > 40 # will have big values near origin
+Ex0 = magE0*np.cos(thE0)
+Ey0 = magE0*np.sin(thE0)
+
+Ex1 = magE1*np.cos(thE1)
+Ey1 = magE1*np.sin(thE1)
+
+Ex2 = magE1*np.cos(thE2)
+Ey2 = magE1*np.sin(thE2)
+
+Ex3 = magE1*np.cos(thE3)
+Ey3 = magE1*np.sin(thE3)
+
+Ex4 = magE1*np.cos(thE4)
+Ey4 = magE1*np.sin(thE4)
+
+thET=np.arctan2((Ex0+Ex1+Ex2+Ex3+Ex4),(Ey0+Ey1+Ey2+Ey3+Ey4))
+magET = np.sqrt((Ex0+Ex1+Ex2+Ex3+Ex4)**2.+(Ey0+Ey1+Ey2+Ey3+Ey4)**2.)
+ExT = np.cos(thET)
+EyT = np.sin(thET)
+
+# quiver plot
+fig, ax = plt.subplots()
+q1 = ax.quiver(X[mask],Y[mask],ExT[mask],EyT[mask])
+ax.set_aspect('equal')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+plt.show()
