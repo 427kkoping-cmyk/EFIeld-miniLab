@@ -27,18 +27,17 @@ thE0 = np.arctan2(Y-y0,X-x0)
 magE0 = k*q/((X-x0)**2.+(Y-y0)**2.)
 
 thE1 = np.arctan2(Y-y1,X-x1)
-magE1 = k*q/((X-x1)**2.+(Y-y1)**2.)
+magE1 = k*(-q)/((X-x1)**2.+(Y-y1)**2.)
 
 thE2 = np.arctan2(Y-y2,X-x2)
-magE2 = k*q/((X-x2)**2.+(Y-y2)**2.)
+magE2 = k*(-q)/((X-x2)**2.+(Y-y2)**2.)
 
 thE3 = np.arctan2(Y-y3,X-x3)
-magE3 = k*q/((X-x3)**2.+(Y-y3)**2.)
+magE3 = k*(-q)/((X-x3)**2.+(Y-y3)**2.)
 
 thE4 = np.arctan2(Y-y4,X-x4)
-magE4 = k*q/((X-x4)**2.+(Y-y4)**2.)
+magE4 = k*(-q)/((X-x4)**2.+(Y-y4)**2.)
 
-mask = magE > 40 # will have big values near origin
 Ex0 = magE0*np.cos(thE0)
 Ey0 = magE0*np.sin(thE0)
 
@@ -58,6 +57,8 @@ thET=np.arctan2((Ex0+Ex1+Ex2+Ex3+Ex4),(Ey0+Ey1+Ey2+Ey3+Ey4))
 magET = np.sqrt((Ex0+Ex1+Ex2+Ex3+Ex4)**2.+(Ey0+Ey1+Ey2+Ey3+Ey4)**2.)
 ExT = np.cos(thET)
 EyT = np.sin(thET)
+
+mask = magET > 40 # will have big values near origin
 
 # quiver plot
 fig, ax = plt.subplots()
